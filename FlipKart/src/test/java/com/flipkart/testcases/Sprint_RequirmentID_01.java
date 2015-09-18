@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.flipkart.setup.Setup;
@@ -18,11 +18,12 @@ public class Sprint_RequirmentID_01 implements Setup{
 	WebDriver driver;
 	SeleniumUtil seleniumUtil;
 
-	@BeforeMethod
+//	@BeforeTest
 	public void setup()
 	{
 		driver= new FirefoxDriver();
 		seleniumUtil = new SeleniumUtil(driver);
+		driver.get(sURL);
 	}
 	
 	@Test
@@ -61,8 +62,16 @@ public class Sprint_RequirmentID_01 implements Setup{
 		
 	}
 	@Test
-	public void Tc_03()
+	public void login() throws InterruptedException
 	{
+		driver= new FirefoxDriver();
+		seleniumUtil = new SeleniumUtil(driver);
+		driver.get(sURL);
+		driver.findElement(By.xpath("//a[contains(text(),'Login')]")).click(); // login link
+		driver.findElement(By.xpath("//*[@placeHolder='Enter email/mobile']")).sendKeys("9004633688");
+		driver.findElement(By.xpath("//*[@placeHolder='Enter password']")).sendKeys("deepthi");
+		Thread.sleep(5000);;
+		driver.findElement(By.xpath("//input[@value='Login']")).click();
 		
 	}
 	
