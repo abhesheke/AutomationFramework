@@ -3,7 +3,9 @@ package com.flipkart.testcases;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -18,12 +20,12 @@ public class Sprint_RequirmentID_01 implements Setup{
 	WebDriver driver;
 	SeleniumUtil seleniumUtil;
 
-//	@BeforeTest
+	@BeforeTest
 	public void setup()
 	{
 		driver= new FirefoxDriver();
 		seleniumUtil = new SeleniumUtil(driver);
-		driver.get(sURL);
+	//	driver.get(sURL);
 	}
 	
 	@Test
@@ -64,17 +66,49 @@ public class Sprint_RequirmentID_01 implements Setup{
 	@Test
 	public void login() throws InterruptedException
 	{
-		driver= new FirefoxDriver();
-		seleniumUtil = new SeleniumUtil(driver);
-		driver.get(sURL);
-		driver.findElement(By.xpath("//a[contains(text(),'Login')]")).click(); // login link
-		driver.findElement(By.xpath("//*[@placeHolder='Enter email/mobile']")).sendKeys("9004633688");
-		driver.findElement(By.xpath("//*[@placeHolder='Enter password']")).sendKeys("deepthi");
-		Thread.sleep(5000);;
-		driver.findElement(By.xpath("//input[@value='Login']")).click();
+				driver.findElement(By.xpath("//a[contains(text(),'Login')]")).click(); // login link
+		driver.findElement(By.xpath("//*[@placeHolder='Enter email/mobile']")).sendKeys("arjun.abhesheke@compugain.com");
+	//	driver.findElement(By.xpath("//*[@placeHolder='Enter password']")).sendKeys("deepthi");
+		//Thread.sleep(5000);;
+		//driver.findElement(By.xpath("//input[@value='Login']")).click();
+		Assert.assertEquals(driver.findElement(By.xpath("//*[@placeHolder='Enter email/mobile']")).getAttribute("value"), "arjun.abhesheke@compugain.com");
 		
 	}
 	
 	
+	public void highlight(WebElement element)
+	{
+		
+			for (int i = 0; i < 2; i++) {
+				JavascriptExecutor js = (JavascriptExecutor) driver;
+				js.executeScript(
+						"arguments[0].setAttribute('style', arguments[1]);",
+						element, "color: red; border: 3px solid red;");
+				js.executeScript(
+						"arguments[0].setAttribute('style', arguments[1]);",
+						element, "");
+			}
+		}
+	
+	//Frame
+	//Alert
+	//Pop-up
+	@Test
+	public void testAlertBox() throws InterruptedException
+	{
+		driver.get(sAlertBox);
+		Thread.sleep(5000);
+		driver.switchTo().frame(driver.findElement(By.id("iframeResult")));
+		WebElement element = driver.findElement(By.xpath("//body/button"));
+		for(int i=0;i<=10;i++){
+		highlight(element);
+		}
+		element.click(); 
+		Alert alert=driver.switchTo().alert(); // shift to alert
+		alert.accept();
+		driver.switchTo().defaultContent(); // 101 and 109 are linked
+		System.out.println(driver.findElement(By.id("textareaCode")).getText());
+
+	}
 	
 }
