@@ -1,7 +1,10 @@
 package com.flipkart.testcases;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -109,6 +112,26 @@ public class Sprint_RequirmentID_01 implements Setup{
 		driver.switchTo().defaultContent(); // 101 and 109 are linked
 		System.out.println(driver.findElement(By.id("textareaCode")).getText());
 
+	}
+	
+	@Test
+	public void verifyPopUp() throws InterruptedException
+	{
+		driver.get("http://rip747.github.io/popupwindow/");
+		driver.findElement(By.xpath("//dt[contains(text(),'Custom settings:')]/../dd/a[contains(text(),'Example 1')]")).click();
+		Thread.sleep(5000);
+		Set<String> a=driver.getWindowHandles();
+			System.out.println("Size"+a.size());
+			System.out.println(a);
+			List< String> arrayList = new ArrayList<String>(a);
+			for (int i = 0; i < arrayList.size(); i++) {
+				System.out.println("---------"+arrayList.get(i));
+			}
+			System.out.println("Page Title"+driver.getTitle());
+			
+			WebDriver driver1=driver.switchTo().window(arrayList.get(1));
+		System.out.println("@@@@"+driver1.findElement(By.xpath("//body")).getText());
+	//	driver1.manage().timeouts().implicitlyWait(10, TimeUnit.MINUTES); // implicet wait
 	}
 	
 }
