@@ -1,7 +1,6 @@
 package com.flipkart.testcases;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -10,20 +9,17 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.flipkart.setup.Setup;
 import com.flipkart.setup.TestBase;
 import com.flipkart.utility.SeleniumUtil;
 
@@ -32,30 +28,16 @@ public class Sprint_RequirmentID_01 extends TestBase{
 	SeleniumUtil seleniumUtil;
 	WebDriverWait driverWait;
 	
-	/*String downloadFilepath = getFilePath(DOWNLOADSPATH);
-	HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
-	chromePrefs.put("profile.default_content_settings.popups", 0);
-	chromePrefs.put("download.default_directory", downloadFilepath);
-	ChromeOptions options = new ChromeOptions();
-	HashMap<String, Object> chromeOptionsMap = new HashMap<String, Object>();
-	options.setExperimentalOption("prefs", chromePrefs);
-	options.addArguments("--test-type");
-	DesiredCapabilities cap = DesiredCapabilities.chrome();
-	cap.setCapability(ChromeOptions.CAPABILITY, chromeOptionsMap);
-	cap.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-	cap.setCapability(ChromeOptions.CAPABILITY, options);
-	*/
 
 	@BeforeTest
 	public void setup()
 	{
-
 		driver = initializeDriver("CHROME");
 	//	driver= new FirefoxDriver();
 		driverWait = new WebDriverWait(driver, 10);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // implicet wait
 		seleniumUtil = new SeleniumUtil(driver);
-		driver.get(sURL);
+	//	driver.get(sURL);
 	}
 	
 	@Test
@@ -161,6 +143,45 @@ public class Sprint_RequirmentID_01 extends TestBase{
 			
 			WebDriver driver1=driver.switchTo().window(arrayList.get(1));
 		System.out.println("@@@@"+driver1.findElement(By.xpath("//body")).getText());
+	}
+	
+	@Test
+	public void actionsExamplesPerform() throws InterruptedException
+	{
+		Thread.sleep(5000);
+		Actions actions = new Actions(driver);
+		actions.click(driver.findElement(By.xpath("//li//span[contains(text(),'Sell')]"))).perform();
+	}
+	
+	@Test
+	public void actionsExamplesBuild() throws InterruptedException
+	{
+		Thread.sleep(5000);
+		Actions actions = new Actions(driver);
+		actions.clickAndHold(driver.findElement(By.xpath("//a/span[contains(text(),'Electronics')]"))).
+		click(driver.findElement(By.xpath("//*[contains(text(),'Huawei Honor')]"))).build().perform();
+		Thread.sleep(5000);
+	/*	driver.findElement(By.name("q")).sendKeys("roadster");
+		driver.findElement(By.name("q")).sendKeys(Keys.ENTER);
+*/
+	}
+	
+	@Test
+	public void fileUpload() throws InterruptedException
+	{
+		driver.get("https://blueimp.github.io/jQuery-File-Upload/basic-plus.html");
+		Thread.sleep(5000);
+		driver.findElement(By.id("fileupload")).sendKeys("D:/nazeer/DCIM/Camera/2013-12-24 18.35.08.jpg");
+		
+	/*	driver.findElement(By.name("q")).sendKeys("roadster");
+		driver.findElement(By.name("q")).sendKeys(Keys.ENTER);
+*/
+		driver.findElement(By.xpath("//input[@value='Search']")).click();
+		new Select(driver.findElement(By.id("gender"))).selectByVisibleText("Female");  // drop down.
+
+		driver.findElement(By.xpath("//input[@id='fk-top-search-box']")).clear();
+		driver.findElement(By.xpath("//input[@id='fk-top-search-box']")).sendKeys("xczxc");
+
 	}
 	
 }
